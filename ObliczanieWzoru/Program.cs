@@ -6,13 +6,29 @@ namespace ObliczanieWzoru
 {
     internal class Program
     {
+        private static int licznik = 1;
         private static char[] cyfry = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.' };
-        private static char[] dostepneZnaki = new char[] { '+', '-', '/', '*', '^', '(', ')', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'};
+        private static char[] dostepneZnaki = new char[] { '+', '-', '/', '*', '^', '(', ')', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.' };
+        private static double[] pierwiastkiNieparzyste = new double[100];
+
+
+        private static void UzupelnijPierwiastki()
+        {
+            for (int i = 1; i <= pierwiastkiNieparzyste.Length; i++)
+            {
+                pierwiastkiNieparzyste[i - 1] = Math.Round(1d / (2d * i + 1d), 8);
+            }
+        }
 
         private static string WyliczNawiasy(string wzor)
         {
             if (!wzor.Contains('('))
+            {
+                licznik--;
                 return Policz(wzor);
+            }
+            else
+                licznik++;
 
             int licznikNawiasow = 0;
 
@@ -56,7 +72,10 @@ namespace ObliczanieWzoru
                     wynik += wzor[i];
             }
 
-            return wynik;
+            if (licznik >= 0)
+                return WyliczNawiasy(wynik);
+            else
+                return wynik;
         }
 
         private static void ZnajdzLiczby(string wzor, char znak, out double lewaLiczba, out double prawaLiczba, out int lewyIndex, out int prawyIndex)
@@ -67,30 +86,50 @@ namespace ObliczanieWzoru
             lewyIndex = 0;
             prawyIndex = 0;
             int licznik = 0;
+            int licznikMinusow = 0;
+            int licznikKropek = 0;
             int znakIndex = wzor.LastIndexOf(znak);
 
             do
             {
                 licznik++;
-                if ((znakIndex - licznik) >= 0 && (cyfry.Contains(wzor[znakIndex - licznik]) || wzor[0] == '-'))
+                if ((znakIndex - licznik) >= 0 && (cyfry.Contains(wzor[znakIndex - licznik]) || wzor[znakIndex - licznik] == '-'))
                 {
-                    lewa.Append(wzor[znakIndex - licznik]);
-                    lewyIndex = znakIndex - licznik;
+                    if (wzor[znakIndex - licznik] == '.')
+                        licznikKropek++;
+                    else if (wzor[znakIndex - licznik] == '-')
+                        licznikMinusow++;
+
+                    if (licznikKropek <= 1)
+                    {
+                        lewa.Append(wzor[znakIndex - licznik]);
+                        lewyIndex = znakIndex - licznik;
+                    }
+
+                    if (licznikMinusow == 1)
+                        break;
                 }
                 else
-                {
-                    licznik = 0;
                     break;
-                }
+
             } while (true);
+
+            licznikMinusow = 0;
+            licznik = 0;
 
             do
             {
                 licznik++;
-                if ((znakIndex + licznik) < wzor.Length && (cyfry.Contains(wzor[znakIndex + licznik]) || wzor[znakIndex + 1] == '-'))
+                if ((znakIndex + licznik) < wzor.Length && (cyfry.Contains(wzor[znakIndex + licznik]) || (wzor[znakIndex + 1] == '-' && licznikMinusow < 1)))
                 {
-                    prawa.Append(wzor[znakIndex + licznik]);
-                    prawyIndex = znakIndex + licznik;
+                    if (wzor[znakIndex + licznik] == '-')
+                        licznikMinusow++;
+
+                    if (licznikMinusow <= 1)
+                    {
+                        prawa.Append(wzor[znakIndex + licznik]);
+                        prawyIndex = znakIndex + licznik;
+                    }
                 }
                 else
                     break;
@@ -114,18 +153,27 @@ namespace ObliczanieWzoru
         private static string Policz(string wzor)
         {
             if (wzor.Contains("ERR"))
-            {
-                wzor = "ERR";
                 return wzor;
-            }
-
 
             string wynik = string.Empty;
 
             if (wzor.Contains('^'))
             {
                 ZnajdzLiczby(wzor, '^', out double lewa, out double prawa, out int lewyIndex, out int prawyIndex);
-                double wynikDzialania = Math.Pow(lewa, prawa);
+
+                double wynikDzialania = 0;
+
+                if (lewa < 0)
+                {
+                    if (prawa < 1 && prawa > 0)
+                    {
+                        if (pierwiastkiNieparzyste.Contains(Math.Round(prawa, 8)))
+                            return Policz("ERR - Pierwiastek z liczby ujemnej");
+                    }
+                    wynikDzialania = Math.Pow(lewa, prawa);
+                }
+
+                wynikDzialania = Math.Pow(lewa, prawa);
 
                 string lewaCzesc = wzor.Remove(lewyIndex);
                 string prawaCzesc = wzor.Remove(0, prawyIndex + 1);
@@ -139,10 +187,17 @@ namespace ObliczanieWzoru
             {
                 ZnajdzLiczby(wzor, '*', out double lewa, out double prawa, out int lewyIndex, out int prawyIndex);
                 double wynikDzialania = lewa * prawa;
+                string stringWynikDzialania = string.Empty;
+
+                if ((lewa < 0 && prawa < 0) || wynikDzialania == 0)
+                    stringWynikDzialania += '+';
+
+                stringWynikDzialania += Convert.ToString(wynikDzialania);
+
 
                 string lewaCzesc = wzor.Remove(lewyIndex);
                 string prawaCzesc = wzor.Remove(0, prawyIndex + 1);
-                wynik += lewaCzesc + Convert.ToString(wynikDzialania) + prawaCzesc;
+                wynik += lewaCzesc + stringWynikDzialania + prawaCzesc;
 
                 return Policz(wynik);
             }
@@ -156,7 +211,7 @@ namespace ObliczanieWzoru
                 if (prawa != 0)
                     wynikDzialania = lewa / prawa;
                 else
-                    return "ERR";
+                    return Policz("ERR - Dzielenie przez 0");
 
                 string lewaCzesc = wzor.Remove(lewyIndex);
                 string prawaCzesc = wzor.Remove(0, prawyIndex + 1);
@@ -183,7 +238,7 @@ namespace ObliczanieWzoru
                 double wynikDzialania = lewa - prawa;
 
                 string lewaCzesc = wzor.Remove(lewyIndex);
-                string prawaCzesc = wzor.Remove(0, prawyIndex + 1);                
+                string prawaCzesc = wzor.Remove(0, prawyIndex + 1);
                 wynik += lewaCzesc + Convert.ToString(wynikDzialania) + prawaCzesc;
 
                 return Policz(wynik);
@@ -194,6 +249,8 @@ namespace ObliczanieWzoru
 
         private static void Main(string[] args)
         {
+            UzupelnijPierwiastki();
+
             string enter = Environment.NewLine;
             string wynik = string.Empty;
             const string space = " ";
@@ -203,49 +260,82 @@ namespace ObliczanieWzoru
             Console.WriteLine("\t> Liczby (również ułamki dziesiętne)");
             Console.WriteLine("\t> Znaki działań: +, -, /, *, ^");
             Console.WriteLine("\t> Nawiasy okrągłe: (, )");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\t> ! Przed nawiasem należy umieścić jeden z znaków działań !");
+            Console.ResetColor();
             Console.WriteLine("\t> Działanie może również zawierać spacje między znakami.");
+            Console.WriteLine("\t> Wpisz Q aby wyjść.");
 
-            Console.WriteLine(enter + "Podaj działanie:");
-            string wzorString = Console.ReadLine();
-            wzorString = wzorString.Replace(space, string.Empty).ToLower();
 
-            int otwartyNawias = 0;
-            int zamknietyNawias = 0;
-            for (int i = 0; i < wzorString.Length; i++)
+            do
             {
-                if (wzorString[i] == '(')
-                    otwartyNawias++;
+                Console.WriteLine(enter + "Podaj działanie:");
+                string wzorString = Console.ReadLine();
+                wzorString = wzorString.Replace(space, string.Empty).ToLower();
 
-                if (wzorString[i] == ')')
-                    zamknietyNawias++;
-            }
-
-            bool blednyZnak = false;
-            foreach (char znak in wzorString)
-            {
-                if (!dostepneZnaki.Contains(znak))
-                {
-                    blednyZnak = true;
+                if (wzorString == "q")
                     break;
-                }
-            }
 
-            if(!blednyZnak)
-            {
-                if (otwartyNawias == zamknietyNawias)
+                int otwartyNawias = 0;
+                int zamknietyNawias = 0;
+                for (int i = 0; i < wzorString.Length; i++)
                 {
-                    wynik = Policz(WyliczNawiasy(wzorString));
-                    Console.WriteLine(enter + "Wynik " + enter + wynik);
+                    if (wzorString[i] == '(')
+                        otwartyNawias++;
+
+                    if (wzorString[i] == ')')
+                        zamknietyNawias++;
+                }
+
+                bool blednyZnak = false;
+                foreach (char znak in wzorString)
+                {
+                    if (!dostepneZnaki.Contains(znak))
+                    {
+                        blednyZnak = true;
+                        break;
+                    }
+                }
+
+                if (!blednyZnak)
+                {
+                    if (otwartyNawias == zamknietyNawias)
+                    {
+                        if (wzorString == string.Empty)
+                            wynik = "0";
+                        else
+                            wynik = Policz(WyliczNawiasy(wzorString));
+
+                        if (wynik.Contains("ERR"))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine(enter + wynik);
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.WriteLine(enter + "Wynik = " + wynik);
+                            Console.ResetColor();
+                        }
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine(enter + "Błędna liczba nawiasów!");
+                        Console.ResetColor();
+                    }
                 }
                 else
-                    Console.WriteLine(enter + "Błędna liczba nawiasów!");
-            }
-            else
-                Console.WriteLine(enter + "Działanie zawiera błędne znaki!");
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(enter + "Działanie zawiera błędne znaki!");
+                    Console.ResetColor();
+                }
 
-            Console.WriteLine();
+                licznik = 0;
 
-            Console.ReadKey();
+            } while (true);
         }
     }
 }
