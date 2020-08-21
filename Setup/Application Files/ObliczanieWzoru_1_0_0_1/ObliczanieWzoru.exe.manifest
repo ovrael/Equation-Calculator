@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="ObliczanieWzoru.exe" version="1.0.0.1" publicKeyToken="5c3d8ffee47a88da" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="ObliczanieWzoru" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="ObliczanieWzoru.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          Opcje manifestu kontroli konta użytkownika
+          Jeśli chcesz zmienić poziom kontroli konta użytkownika systemu Windows, zastąp węzeł 
+          requestedExecutionLevel jednym z następujących.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         Jeśli chcesz użyć wirtualizacji plików i rejestru do celów zgodności wstecznej, 
+         usuń węzeł requestedExecutionLevel.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ObliczanieWzoru.exe" size="9648">
+      <assemblyIdentity name="ObliczanieWzoru" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>fbpEsw9bWjBCCV3Kqv/ue06MZvwjMiS+ed2g9e0dmOI=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="ObliczanieWzoru.exe.config" size="189">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>R+Wg8QGvQVHX8T0ta/qbhH1bXkqY0fRnS3wBV3J0bN8=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=JERZYX\ovrael" issuerKeyHash="55349446d0385d06986bd016d0265602ad73d217" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>4/wsqiTzWQRztIXKldhcWBSffqiexzOLL7ksfUalxKc=</DigestValue></Reference></SignedInfo><SignatureValue>JtxYd/d0Lk7QoW5uybzA8U7gKF5lrcTW+S6SpculNUIAVSh+gbkxMrrwmNw5h4GU2I5/pDVrDHvf/RDEa57Bfo+nxoS1cDBiziTXVXlX5gfFxEaXHC/2wToH+Abov2H52acwdjaqyfE/zypEtNjIYS8zuozRqGDnQRo/HuPtpQ8=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>rFTB58ZnSvvxmbIm0cwXthYZTZDEzxtmgrYMyrW7P29BWOZ2mTynEIySVhVnQ/8fTQljdvkP7Lsr25NJJhTIWYtxjA+jLFvevJqcs0unDzEIsmD49KnR4pwZjaUqCaiCR5ntglDLW0xILjHs4x2GLDjVZ7PC2GcpH7eiAQRvphk=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="a7c4a5467d2cb92f8b33c79ea87e9f14585cd895ca85b4730459f324aa2cfce3" Description="" Url=""><as:assemblyIdentity name="ObliczanieWzoru.exe" version="1.0.0.1" publicKeyToken="5c3d8ffee47a88da" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=JERZYX\ovrael</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>ehtPuoaooIjYWnCteTz36wqkhvLwIew9n8t/P4PiOZs=</DigestValue></Reference></SignedInfo><SignatureValue>LIO0dBF/uKTTcKSeyyuuXjyzmsPODN5kHb0VPHaJUq6fI5WwvBWbrfuUW+uFbug4AVbEJMvpEMUEIBO8PdI/ycCqIDAL9hOb7y7Uldj1QQ5mVcQdMQ46zS6YSLbilcaO1t92XU6Y0bOOJLR/u4wR4iyxZIF0S43wtxIVCdUUUfY=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>rFTB58ZnSvvxmbIm0cwXthYZTZDEzxtmgrYMyrW7P29BWOZ2mTynEIySVhVnQ/8fTQljdvkP7Lsr25NJJhTIWYtxjA+jLFvevJqcs0unDzEIsmD49KnR4pwZjaUqCaiCR5ntglDLW0xILjHs4x2GLDjVZ7PC2GcpH7eiAQRvphk=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIBzTCCATagAwIBAgIQYOagnrFA17pEsN2HovUoKTANBgkqhkiG9w0BAQsFADAlMSMwIQYDVQQDHhoASgBFAFIAWgBZAFgAXABvAHYAcgBhAGUAbDAeFw0yMDA4MjExMjE1NDBaFw0yMTA4MjExODE1NDBaMCUxIzAhBgNVBAMeGgBKAEUAUgBaAFkAWABcAG8AdgByAGEAZQBsMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCsVMHnxmdK+/GZsibRzBe2FhlNkMTPG2aCtgzKtbs/b0FY5naZPKcQjJJWFWdD/x9NCWN2+Q/suyvbk0kmFMhZi3GMD6MsW968mpyzS6cPMQiyYPj0qdHinBmNpSoJqIJHme2CUMtbTEguMezjHYYsONVns8LYZykft6IBBG+mGQIDAQABMA0GCSqGSIb3DQEBCwUAA4GBAHATFLYNoyhxnQQwOB52eqT3heKCExCVOipNFfCfe5EW2Vmh0UQ8byEfOKObEvGpFANkhfTHiYyuuZi5ui+eF3kF5vq5N9E/kqFOZ/QzafabVJBYchTLNQoBxgUQ3NfDExb2n3drNwqX9TrXTlu27TQI8FyesVSCuZhgtA8s0NVq</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
